@@ -20,7 +20,7 @@
     <p>
         We just like random interactivity in the site, including a fun effect if you hover over <span id="hover-this"><b>this.</b></span>
     </p>
-    <p id="set-color" onclick="setBackgroundColorById('set-color', document.getElementById('color-input').value)">
+    <p id="set-color" onclick="setBackgroundColorById('set-color', getValueFromId('color-input'))">
         We can click anywhere in this paragraph tag and it will change the background color to whatever is in this input: <input type="text" id="color-input"/>
     </p>
     <p onmouseover="mouseOverFunction(this)">
@@ -33,7 +33,7 @@
         setBackgroundColorById("paragraph", "blue");
     }
     document.getElementById("alert").onclick = () =>{
-        alert(document.getElementById("popup-input").value);
+        alert(getValueFromId("popup-input"));
     }
     document.getElementById("hover-this").onmouseover =()=>{
         setBackgroundColorById("body", "red");
@@ -55,11 +55,4 @@
 </body>
 </html>
 
-function NotarrowFunction(el) {
-  el.style = "background-color: black";
-}
-
-// Fonction fléchée
-const arrowFunction = (el) => {
-  el.style = "background-color: black";
-};
+ 
