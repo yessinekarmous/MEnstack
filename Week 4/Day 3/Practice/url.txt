@@ -1,0 +1,9 @@
+https://pokeapi.co/api/v2/berry//aspear
+
+https://pokeapi.co/api/v2/berry//8
+
+https://pokeapi.co/api/v2/berry//pinap
+
+https://pokeapi.co/api/v2/berry//2
+
+https://pokeapi.co/api/v2/berry//razz
