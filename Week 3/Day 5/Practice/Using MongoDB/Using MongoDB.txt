@@ -1,0 +1,1285 @@
+Please enter a MongoDB connection string (Default: mongodb://localhost/): mongodb://localhost:27017/mydb
+mongodb://localhost:27017/mydb
+Current Mongosh Log ID: 64e1537c8993427df1f19694
+Connecting to:          mongodb://localhost:27017/mydb?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.5
+Using MongoDB:          5.0.20
+Using Mongosh:          1.10.5
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-08-19T14:45:21.083+01:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+mydb> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+hotels  48.00 KiB
+local   40.00 KiB
+mydb> use my_first_db
+switched to db my_first_db
+my_first_db> db.createCollection ("Students")
+{ ok: 1 }
+my_first_db> db.Students.insert({name: "Asma", home_state: "California", lucky_number: 8, birthday: {month: 29, day: 8, year: 5}})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e1548c8993427df1f19695") }
+}
+my_first_db>  db.Students.insert({name: "Mounir", home_state: "Washington", lucky_number: 2, birthday: {month: 9, day: 5, year:2007}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e154cb8993427df1f19696") }
+}
+my_first_db>  db.Students.insert({name: "Mounir", home_state: "Washington", lucky_number: 2, birthday: {month: 9, day: 5, year:2007}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e154d78993427df1f19697") }
+}
+my_first_db>  db.Students.insert({name: "Mounir", home_state: "Washington", lucky_number: 2, birthday: {month: 9, day: 5, year:2007}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e154df8993427df1f19698") }
+}
+my_first_db> db.Students.insert({name: "Mounir", home_state: "Tunis", lucky_number: 88, birthday: {month: 4, day: 25, year:2000}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e155028993427df1f19699") }
+}
+my_first_db>
+
+my_first_db> db.Students.insert({name: "Majdi", home_state: "California", lucky_number: 10, birthday: {month: 1, day:15, year:2003}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e1553d8993427df1f1969a") }
+}
+my_first_db> db.Students.insert({name: "Rimeh", home_state: "Washington", lucky_number: 1, birthday: {month: 12, day: 2, year:1990})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:118)
+
+> 1 | db.Students.insert({name: "Rimeh", home_state: "Washington", lucky_number: 1, birthday: {month: 12, day: 2, year:1990})
+    |                                                                                                                       ^
+  2 |
+
+my_first_db> db.Students.insert({name: "Rimeh", home_state: "Washington", lucky_number: 1, birthday: {month: 12, day: 2, year:1990}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("64e1558b8993427df1f1969b") }
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e154d78993427df1f19697"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e154df8993427df1f19698"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Mounir',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.deleteOne( _id: ObjectId("64e154d78993427df1f19697"))
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:26)
+
+> 1 | db.Students.deleteOne( _id: ObjectId("64e154d78993427df1f19697"))
+    |                           ^
+  2 |
+
+my_first_db> db.Students.deleteOne( ObjectId("64e154d78993427df1f19697"))
+MongoServerError: BSON field 'delete.deletes.q' is the wrong type 'objectId', expected type 'object'
+my_first_db>
+{ acknowledged: true, deletedCount: 1 }
+my_first_db> db.Students.find()
+[ acknowledged: true, deletedCount: 0 }
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e154df8993427df1f19698"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Mounir',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.deleteOne({  _id: ObjectId("64e154df8993427df1f19698")})
+{ acknowledged: true, deletedCount: 1 }
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Mounir',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.find()
+[eprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+  {goInvalidArgumentError: Update document requires atomic operators
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Mounir',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Mounir',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.update({  _id: ObjectId("64e155028993427df1f19699")},{name:"Sameh"})
+MongoInvalidArgumentError: Update document requires atomic operators
+my_first_db>  db.Students.update({  _id: ObjectId("64e155028993427df1f19699")},{$set:{name:"Sameh"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.find( { home_state: 'Washington'},{  home_state: 'California'})
+[
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    home_state: 'California'
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    home_state: 'California'
+  }
+]
+my_first_db> db.Students.find({home_state:{$in:['Washington','California']}})
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.find( { lucky_number:{$gt:3}})
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  }
+]
+my_first_db> db.Students.find({lucky_number:{$ite:9}})
+MongoServerError: unknown operator: $ite
+my_first_db> db.Students.find({lucky_number:{$Ite:9}})
+MongoServerError: unknown operator: $Ite
+my_first_db> db.Students.find({lucky_number:{$$lte:9}})
+MongoServerError: unknown operator: $$lte
+my_first_db> db.Students.find({lucky_number:{$lte:9}})
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.find({lucky_number:{$$lte:10}})
+MongoServerError: unknown operator: $$lte
+my_first_db> db.Students.find({lucky_number:{$lte:10}})
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.find({lucky_number:{$lte:9,$gte:1,}})
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 }
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db> db.Students.update({},{$set:{interests:[ 'coding', 'brunch', 'MongoDB']}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 }
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 }
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 }
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 }
+  }
+]
+my_first_db>  db.Students.updateMany({},{$set:{interests:[ 'coding', 'brunch', 'MongoDB']}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  }
+]
+my_first_db> db.Students.update({name:"Mounir"},{$push:{interests:{$each:['Football','Boxe']}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  }
+]
+my_first_db> db.Students.update({name:"Rimeh"},{$push:{interests:{$each:['Development','Reading']}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db>  db.Students.update({name:"Asma"},{$push:{interests:['Taxes']}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', [ 'Taxes' ] ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']
+... db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']
+my_first_db> db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']
+... db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']
+*Uncaught:
+SyntaxError: Unexpected token, expected "," (2:0)
+
+  1 | db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']
+> 2 | db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']
+    | ^
+  3 |
+
+my_first_db>
+
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', [ 'Taxes' ] ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.find()
+[ncaught:
+  {taxError: Unexpected token, expected "," (1:92)
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']})
+    home_state: 'California',                                                                     ^
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', [ 'Taxes' ] ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.update({name:"Asma"},{$set:{interests:[ 'coding', 'brunch', 'MongoDB', 'Taxes']}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Taxes' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.remove({interests:['Taxes']})
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 0 }
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Taxes' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.deleteOne({interests:['Taxes']})
+{ acknowledged: true, deletedCount: 0 }
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Taxes' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.update({name:"Asma"},{$pull:{interests:['Taxe']}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Taxes' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db>  db.Students.update({name:"Asma"},{$pull:{interests:"Taxe"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Taxes' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.updateOne({ name: "Asma" }, { $pull: { interests: "Taxes" } });
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+my_first_db> db.Students.updateOne({ name: "Asma" }, { $pull: { interests: "Taxes" } });
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e154cb8993427df1f19696"),
+    name: 'Mounir',
+    home_state: 'Washington',
+    lucky_number: 2,
+    birthday: { month: 9, day: 5, year: 2007 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Football', 'Boxe' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1558b8993427df1f1969b"),
+    name: 'Rimeh',
+    home_state: 'Washington',
+    lucky_number: 1,
+    birthday: { month: 12, day: 2, year: 1990 },
+    interests: [ 'coding', 'brunch', 'MongoDB', 'Development', 'Reading' ]
+  }
+]
+my_first_db> db.Students.find()
+[ acknowledged: true, deletedCount: 2 }
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  }
+]
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  }
+]
+my_first_db> db.Students.find()
+[
+  {
+    _id: ObjectId("64e1548c8993427df1f19695"),
+    name: 'Asma',
+    home_state: 'California',
+    lucky_number: 8,
+    birthday: { month: 29, day: 8, year: 5 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e155028993427df1f19699"),
+    name: 'Sameh',
+    home_state: 'Tunis',
+    lucky_number: 88,
+    birthday: { month: 4, day: 25, year: 2000 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  },
+  {
+    _id: ObjectId("64e1553d8993427df1f1969a"),
+    name: 'Majdi',
+    home_state: 'California',
+    lucky_number: 10,
+    birthday: { month: 1, day: 15, year: 2003 },
+    interests: [ 'coding', 'brunch', 'MongoDB' ]
+  }
+]
+my_first_db> db.Students.remove({home_state:{$in:["California","Washignton"]}})
+{ acknowledged: true, deletedCount: 2 }
+my_first_db> db.Students.find()
+{ acknowledged: true, deletedCount: 1 }
+my_first_db>
+
+my_first_db> db.Students.find()
+
+my_first_db> db.Students.update({},{$set:{number_of_Belts:0}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
+
+my_first_db>  db.Students.find()
+
+my_first_db>
+
+my_first_db> db.Students.update({home_state:"Washingthon"},{$set:{number_of_Belts:1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.update({home_state:"Washington"},{$set:{number_of_Belts:1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.update({},{$rename:{"number_of_Belts":"Belt_earned"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.update({},{$unset:{lucky_number:""}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+my_first_db> db.Students.find()
