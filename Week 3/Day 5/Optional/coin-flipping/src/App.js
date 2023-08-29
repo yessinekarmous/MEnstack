@@ -48,7 +48,9 @@ function App() {
                 Setresult(res)
   } )
   .catch( err =>{ console.log(err)
-  Setresult(err)} );},[])
+  Setresult(err)} );}
+  
+  ,[])
   
     
       
