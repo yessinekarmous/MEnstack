@@ -28,3 +28,25 @@ module.exports.FindAll = (req, res) => {
       res.status(400).json({ message: "Something went wrong📛📛📛", err })
     );
 };
+
+module.exports.UpdateOne = (req, res) => {
+  const { params } = req;
+  Product.findOneAndUpdate({ _id: params.id }, req.body, { new: true })
+    .then((UpdatedOne) => {
+      res.status(200).json({ UpdatedOne });
+    })
+    .catch((err) =>
+      res.status(400).json({ message: "Something went wrong📛📛📛", err })
+    );
+};
+
+module.exports.DeleteOne = (req, res) => {
+  const { params } = req;
+  Product.deleteOne({ _id: params.id })
+    .then((DeletedProduct) => {
+      res.status(200).json({ DeletedProduct });
+    })
+    .catch((err) =>
+      res.status(400).json({ message: "Something went wrong📛📛📛", err })
+    );
+};
